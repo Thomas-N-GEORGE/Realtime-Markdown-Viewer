@@ -66,8 +66,17 @@ var parseStrong = function(str) {
 var parseCode = function(str) {
   var codeRegExp = /`{1}(\w+)`{1}/;
   var stra = [];
-  while ((stra = codeRegExp.exec(str)) !== null) {
+    while ((stra = codeRegExp.exec(str)) !== null) {
     str = str.replace(stra[0], '<pre>' + stra[1] + '</pre>');
+  }
+  return str;
+}
+
+var parseBlockQuote = function(str) {
+  var quoteRegExp = /\:\"(.*?)\"\:/
+  var stra = [];
+  while ((stra = quoteRegExp.exec(str)) !== null) {
+    str = str.replace(stra[0], '<blockquote>' + stra[1] + '</blockquote>');
   }
   return str;
 }
@@ -84,6 +93,7 @@ var markdown = {
     str = parseHorizontaleLine(str);
     str = parseLink(str);
     str = parseCode(str);
+    str = parseBlockQuote(str);
     return str;
   }
 };
